@@ -59,9 +59,10 @@ class App extends Component {
   }
   render() {
     const style = {
-      backgroundColoor : 'white',
+      backgroundColor : 'green',
+      color: '#fff',
       font: 'inherit',
-      border: '1px solid blue',
+      border: '1px solid #ccc',
       padding: '1em 2em',
       marginBottom: '1em',
       cursor: 'pointer'
@@ -85,17 +86,34 @@ class App extends Component {
           }
         </div>
       );
+      style.backgroundColor = "red";
+      style[':hover'] =  {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
     }
+
+    let classes = [];
+
+    if (this.state.persons.length <= 2) {
+      classes.push('red');
+    } 
+    if (this.state.persons.length <= 1){
+      classes.push('bold');
+    }
+    
 
     return(
       <div className="App">
         <h1>Halo Bang Bang</h1>
+        <p className={ classes.join(' ') }>This is paragraph</p>
         <button 
           style={style}
           onClick={ this.togglePersonsHandler }>Switch</button>
         { persons }
       </div>
     );
+
   }
     
 }
