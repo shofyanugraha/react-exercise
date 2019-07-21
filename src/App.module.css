@@ -1,0 +1,30 @@
+.App {
+  text-align: center;
+}
+
+.red {
+  color: red;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+button {
+  border: 1px solid #ccc;
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+}
+button:hover{
+  background: #ccc;
+}
+
+button.red {
+  background: red;
+  color: black;
+}
+
+button.red:hover {
+  background: tomato;
+}
+
