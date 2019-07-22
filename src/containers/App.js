@@ -1,15 +1,39 @@
 import React, {Component} from 'react';
-import AppClass from './App.module.css';
-import Person from './Person/Person'
+import './App.css';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
+  constructor(props){
+    super(props); 
+    console.log('App constructed');
+  }
+
   state = {
     persons: [
       { id: 1, name: 'Helo', age: 10 },
-      { id: 2, name: 'World', age: 11 },
+      { id: 2, name: 'World', age: 11 },  
       { id: 3, name: 'Man', age: 15 },
     ],
     showPersons: false
+  }
+
+  static getDerivedStateFromProps(props, state){
+    console.log('App getDerivedStateFromProps', props);
+    return state;
+  }
+
+  componentDidMount(){
+    console.log('App did mount');
+  }
+
+  componentDidUpdate(){
+    console.log( 'App componentDidUpdate' );
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    console.log('App shouldComponentUpdate');
+    return true;
   }
 
   switchNameHandler = (newName) => {
@@ -58,54 +82,30 @@ class App extends Component {
     this.setState({persons: persons});
   }
   render() {
+    console.log('App is rendered ');
+    
     let persons = null;
 
-    let buttonClasses = '';
-
-
     if (this.state.showPersons) {
-      persons = (
-        <div>
-          {
-            this.state.persons.map( (person, index) => {
-              return (<Person 
-                click={ this.deletePerson.bind(this, index) }
-                name={ person.name } 
-                age={ person.age }
-                key={ person.id }
-                changed={ (event) => this.nameChangeHandler(event, person.id) }
-              />)
-            })
-          }
-        </div>
-      );
+      persons = <Persons 
+            persons={this.state.persons}
+            clicked={this.deletePerson}
+            changed={this.nameChangeHandler}
+            />;
     }
 
-    let classes = [];
-
-    buttonClasses = AppClass.red;
-
-    if (this.state.persons.length <= 2) {
-      classes.push( AppClass.red );
-    } 
-    if (this.state.persons.length <= 1){
-      classes.push( AppClass.bold );
-    }
-    
-
-    return(
-      <div className={AppClass.App}>
-        <h1>Halo Bang Bang</h1>
-        <p className={ classes.join(' ') }>This is paragraph</p>
-        <button 
-          className={ buttonClasses }
-          onClick={ this.togglePersonsHandler }>Switch</button>
-        { persons }
+    return (
+      <div className="App">
+        <Cockpit 
+          title={ this.props.appTitle}
+          showPersons={ this.state.showPersons }
+          persons={ this.state.persons }
+          clicked={ this.togglePersonsHandler }
+          />
+          {persons}
       </div>
-    );
-
+    )
   }
-    
 }
 
 export default App;
